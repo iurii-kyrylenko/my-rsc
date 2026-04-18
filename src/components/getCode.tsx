@@ -12,5 +12,6 @@ export const getCode = createServerFn()
     .handler(async () => {
         const content = (await readFile("package.json")).toString();
         const Renderable = await renderServerComponent(<Code text={content} />);
+        await new Promise((resolve) => setTimeout(() => resolve(0), 1000));
         return { Renderable };
     });

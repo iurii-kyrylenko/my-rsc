@@ -9,18 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SimpleRouteImport } from './routes/simple'
+import { Route as DeferRouteImport } from './routes/defer'
 import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]js'
-import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthProtectedRouteImport } from './routes/_auth/protected'
 
+const SimpleRoute = SimpleRouteImport.update({
+  id: '/simple',
+  path: '/simple',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeferRoute = DeferRouteImport.update({
+  id: '/defer',
+  path: '/defer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CustomScriptDotjsRoute = CustomScriptDotjsRouteImport.update({
   id: '/customScript.js',
   path: '/customScript.js',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRouteRoute = AuthRouteRouteImport.update({
-  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -28,57 +34,62 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthProtectedRoute = AuthProtectedRouteImport.update({
-  id: '/protected',
-  path: '/protected',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
-  '/protected': typeof AuthProtectedRoute
+  '/defer': typeof DeferRoute
+  '/simple': typeof SimpleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
-  '/protected': typeof AuthProtectedRoute
+  '/defer': typeof DeferRoute
+  '/simple': typeof SimpleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteRouteWithChildren
   '/customScript.js': typeof CustomScriptDotjsRoute
-  '/_auth/protected': typeof AuthProtectedRoute
+  '/defer': typeof DeferRoute
+  '/simple': typeof SimpleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/customScript.js' | '/protected'
+  fullPaths: '/' | '/customScript.js' | '/defer' | '/simple'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/customScript.js' | '/protected'
-  id: '__root__' | '/' | '/_auth' | '/customScript.js' | '/_auth/protected'
+  to: '/' | '/customScript.js' | '/defer' | '/simple'
+  id: '__root__' | '/' | '/customScript.js' | '/defer' | '/simple'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   CustomScriptDotjsRoute: typeof CustomScriptDotjsRoute
+  DeferRoute: typeof DeferRoute
+  SimpleRoute: typeof SimpleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/simple': {
+      id: '/simple'
+      path: '/simple'
+      fullPath: '/simple'
+      preLoaderRoute: typeof SimpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/defer': {
+      id: '/defer'
+      path: '/defer'
+      fullPath: '/defer'
+      preLoaderRoute: typeof DeferRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customScript.js': {
       id: '/customScript.js'
       path: '/customScript.js'
       fullPath: '/customScript.js'
       preLoaderRoute: typeof CustomScriptDotjsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -88,32 +99,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_auth/protected': {
-      id: '/_auth/protected'
-      path: '/protected'
-      fullPath: '/protected'
-      preLoaderRoute: typeof AuthProtectedRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
   }
 }
 
-interface AuthRouteRouteChildren {
-  AuthProtectedRoute: typeof AuthProtectedRoute
-}
-
-const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthProtectedRoute: AuthProtectedRoute,
-}
-
-const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
-  AuthRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRouteRoute: AuthRouteRouteWithChildren,
   CustomScriptDotjsRoute: CustomScriptDotjsRoute,
+  DeferRoute: DeferRoute,
+  SimpleRoute: SimpleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

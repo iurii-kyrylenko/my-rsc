@@ -74,8 +74,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                         Home
                     </Link>
                     {" | "}
-                    <Link to="/protected" activeProps={{ className: "font-bold" }}>
-                        Protected
+                    <Link to="/simple" activeProps={{ className: "font-bold" }}>
+                        Simple
+                    </Link>
+                    {" | "}
+                    <Link to="/defer" activeProps={{ className: "font-bold" }}>
+                        Defer
                     </Link>
                 </div>
                 <hr />
