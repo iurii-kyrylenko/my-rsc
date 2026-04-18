@@ -7,14 +7,14 @@ import { nitro } from "nitro/vite";
 import rsc from "@vitejs/plugin-rsc";
 
 export default defineConfig({
+    resolve: {
+        tsconfigPaths: true,
+    },
     server: {
         port: 3000,
     },
     plugins: [
         tailwindcss(),
-        tsConfigPaths({
-            projects: ["./tsconfig.json"],
-        }),
         tanstackStart({
             srcDirectory: "src",
             rsc: {

@@ -1,13 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router"
+// src/routes/index.tsx
+
+import { createFileRoute } from "@tanstack/react-router";
+import { getCode } from "~/components/getCode";
 
 export const Route = createFileRoute("/")({
-  component: Home,
-})
+    loader: async () => {
+        const { Renderable } = await getCode();
+        return { Code: Renderable };
+    },
+    component: Home,
+});
 
 function Home() {
-  return (
-    <div className="p-2">
-      <h3>Welcome Home!!!</h3>
-    </div>
-  );
+    const { Code } = Route.useLoaderData();
+
+    return (
+        <div className="p-2">
+            <h3>Welcome Home!!!</h3>
+            <>{Code}</>
+        </div>
+    );
 }
