@@ -5,7 +5,7 @@ import { getCode } from "~/components/getCode";
 
 export const Route = createFileRoute("/simple")({
     loader: async () => {
-        const { Renderable } = await getCode();
+        const { Renderable } = await getCode({ data: "src/components/getCode.tsx" });
         return { Code: Renderable };
     },
     component: RouteComponent,
