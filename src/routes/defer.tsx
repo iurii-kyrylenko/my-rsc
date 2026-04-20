@@ -6,7 +6,7 @@ import { getCode } from "~/components/getCode";
 
 export const Route = createFileRoute("/defer")({
     loader: async () => {
-        return { codePromise: getCode() };
+        return { codePromise: getCode({ data: "src/routes/defer.tsx" }) };
     },
     component: RouteComponent,
 });

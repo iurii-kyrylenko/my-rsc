@@ -78,6 +78,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                         Simple
                     </Link>
                     {" | "}
+                    <Link to="/composite" activeProps={{ className: "font-bold" }}>
+                        Composite
+                    </Link>
+                    {" | "}
                     <Link to="/defer" activeProps={{ className: "font-bold" }}>
                         Defer
                     </Link>
