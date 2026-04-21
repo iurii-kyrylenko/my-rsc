@@ -1,0 +1,63 @@
+digraph Inception {
+    // General Settings
+    rankdir=LR;
+    node [shape=box, style=filled, fontname="Helvetica", fontsize=10];
+    edge [fontname="Helvetica", fontsize=9];
+    overlap=false;
+    splines=true;
+
+    // Reality Layer
+    subgraph cluster_reality {
+        label = "REALITY (The Airplane)";
+        style = dashed;
+        color = black;
+        Reality [label="The Mission: Inception\n(Target: Robert Fischer)", fillcolor="#e1e1e1"];
+        Cobb [label="Dom Cobb\n(The Extractor)", fillcolor="#add8e6"];
+        Saito [label="Saito\n(The Client)", fillcolor="#fffacd"];
+    }
+
+    // The Team
+    subgraph cluster_team {
+        label = "The Team";
+        color = blue;
+        Arthur [label="Arthur\n(The Point Man)", fillcolor="#add8e6"];
+        Ariadne [label="Ariadne\n(The Architect)", fillcolor="#add8e6"];
+        Eames [label="Eames\n(The Forger)", fillcolor="#add8e6"];
+        Yusuf [label="Yusuf\n(The Chemist)", fillcolor="#add8e6"];
+    }
+
+    // Dream Layers
+    subgraph cluster_dreams {
+        label = "Dream Layers (Time Dilates)";
+        color = red;
+        Level1 [label="Level 1: Rainy City\n(Yusuf's Dream)", fillcolor="#ffcccb"];
+        Level2 [label="Level 2: Hotel\n(Arthur's Dream)", fillcolor="#ffb3ba"];
+        Level3 [label="Level 3: Snow Fortress\n(Eames's Dream)", fillcolor="#ff9aa2"];
+        Limbo [label="Limbo: Unconstructed\n(Cobb/Mal's World)", fillcolor="#caffbf"];
+    }
+
+    // Characters & Obstacles
+    Fischer [label="Robert Fischer\n(The Mark)", fillcolor="#ffd1dc"];
+    Mal [label="Mal Cobb\n(The Projection / Saboteur)", fillcolor="#bdb2ff"];
+    TheTop [label="The Totem (Spinning Top)\nReality vs. Dream?", shape=ellipse, fillcolor="#9bf6ff"];
+
+    // Relationships and Flow
+    Saito -> Cobb [label="Hires"];
+    Cobb -> Arthur [label="Partners"];
+    Cobb -> Ariadne [label="Trains"];
+    Cobb -> Eames [label="Recruits"];
+    Cobb -> Yusuf [label="Recruits"];
+
+    Reality -> Level1 [label="Kick 1"];
+    Level1 -> Level2 [label="Kick 2"];
+    Level2 -> Level3 [label="Kick 3"];
+    Level3 -> Limbo [label="Death/Deep Sedation"];
+
+    Cobb -> Mal [label="Guilt/Inception"];
+    Mal -> Level3 [label="Sabotages"];
+    Fischer -> Level3 [label="Emotional Catharsis"];
+
+    // The Ending
+    Limbo -> Reality [label="Waking Up"];
+    Reality -> TheTop [label="The Final Test"];
+}

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SimpleRouteImport } from './routes/simple'
+import { Route as GraphRouteImport } from './routes/graph'
 import { Route as DeferRouteImport } from './routes/defer'
 import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]js'
 import { Route as CompositeRouteImport } from './routes/composite'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const SimpleRoute = SimpleRouteImport.update({
   id: '/simple',
   path: '/simple',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraphRoute = GraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DeferRoute = DeferRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
 }
 export interface FileRoutesById {
@@ -61,19 +69,27 @@ export interface FileRoutesById {
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/composite' | '/customScript.js' | '/defer' | '/simple'
+  fullPaths:
+    | '/'
+    | '/composite'
+    | '/customScript.js'
+    | '/defer'
+    | '/graph'
+    | '/simple'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/composite' | '/customScript.js' | '/defer' | '/simple'
+  to: '/' | '/composite' | '/customScript.js' | '/defer' | '/graph' | '/simple'
   id:
     | '__root__'
     | '/'
     | '/composite'
     | '/customScript.js'
     | '/defer'
+    | '/graph'
     | '/simple'
   fileRoutesById: FileRoutesById
 }
@@ -82,6 +98,7 @@ export interface RootRouteChildren {
   CompositeRoute: typeof CompositeRoute
   CustomScriptDotjsRoute: typeof CustomScriptDotjsRoute
   DeferRoute: typeof DeferRoute
+  GraphRoute: typeof GraphRoute
   SimpleRoute: typeof SimpleRoute
 }
 
@@ -92,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/simple'
       fullPath: '/simple'
       preLoaderRoute: typeof SimpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/graph': {
+      id: '/graph'
+      path: '/graph'
+      fullPath: '/graph'
+      preLoaderRoute: typeof GraphRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defer': {
@@ -130,6 +154,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompositeRoute: CompositeRoute,
   CustomScriptDotjsRoute: CustomScriptDotjsRoute,
   DeferRoute: DeferRoute,
+  GraphRoute: GraphRoute,
   SimpleRoute: SimpleRoute,
 }
 export const routeTree = rootRouteImport

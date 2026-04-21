@@ -1,0 +1,48 @@
+digraph HagsNook {
+    rankdir=TB;
+    node [shape=box, style=filled, color=lightgrey, fontname="Helvetica"];
+    edge [fontname="Helvetica", fontsize=10];
+
+    // Main Entities
+    Sub_Rampole [label="Tad Rampole\n(American Visitor)", fillcolor=lightblue];
+    Sub_Fell [label="Dr. Gideon Fell\n(Detective)", fillcolor=gold];
+    Sub_Dorothy [label="Dorothy Starberth", fillcolor=lightpink];
+    Sub_Martin [label="Martin Starberth\n(The Heir)", fillcolor=lightgrey];
+    Sub_Herbert [label="Herbert Starberth\n(The Brother)", fillcolor=lightgrey];
+    Loc_Prison [label="Chatterham Prison\n(Hag's Nook Pit)", shape=house, fillcolor=lightyellow];
+    
+    // Background & Inciting Incident
+    Legend [label="The Starberth Curse:\n'Die of Broken Necks'", shape=septagon, fillcolor=salmon];
+    Ritual [label="25th Birthday Vigil\nin Governor's Room"];
+    
+    Legend -> Ritual [label="Ancestral Will"];
+    Sub_Rampole -> Sub_Dorothy [label="Falls in love (Train platform)"];
+    Sub_Rampole -> Sub_Fell [label="Visits with letter of intro"];
+    
+    // The Vigil
+    Sub_Martin -> Ritual [label="Undergoes ordeal"];
+    Ritual -> Loc_Prison;
+    
+    // The Crime
+    Murder [label="Martin found dead\nwith broken neck", shape=diamond, fillcolor=red];
+    Sub_Fell -> Loc_Prison [label="Watches from afar"];
+    Loc_Prison -> Murder [label="Body found in pit"];
+    
+    // Investigation Elements
+    Clues [label="The Clues:\n- Grandfather clock (10 min off)\n- The fourth key\n- The handkerchief in pit\n- Cryptic poem", shape=note, fillcolor=ivory];
+    Sub_Fell -> Clues [label="Analyzes"];
+    Sub_Rampole -> Loc_Prison [label="Searches well for evidence"];
+    
+    // Suspects & Dynamics
+    Sub_Herbert -> Sub_Martin [label="Attempts to calm"];
+    Murder -> Sub_Herbert [label="Suspect"];
+    
+    // Resolution
+    Reveal [label="Solution:\nKiller identified", shape=doublecircle, fillcolor=limegreen];
+    Sub_Fell -> Reveal [label="Connects father's 'accident'\nto Martin's murder"];
+    Reveal -> Legend [label="Clears the curse"];
+    Reveal -> Sub_Dorothy [label="Enables happy ending"];
+    
+    {rank=same; Sub_Fell Sub_Rampole}
+    {rank=same; Sub_Martin Sub_Herbert Sub_Dorothy}
+}
