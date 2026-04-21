@@ -2,7 +2,7 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { getSvg } from "~/components/getSvg";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const Route = createFileRoute('/graph')({
     loader: async () => {
@@ -15,41 +15,45 @@ export const Route = createFileRoute('/graph')({
 function RouteComponent() {
     const { rsc } = Route.useLoaderData();
 
+    const panZoomRef = useRef<any>(null);
+
     useEffect(() => {
-        let panZoomInstance: any = null;
+        let resizeListener: (() => void) | null = null;
 
-        // Helper to handle the window resize event
-        const handleResize = () => {
-            if (panZoomInstance) {
-                panZoomInstance.resize();
-                panZoomInstance.fit();
-                panZoomInstance.center();
-            }
-        };
-
-        // Ensure the library is only loaded on the client.
-        import("svg-pan-zoom").then((svgPanZoom) => {
+        const init = async () => {
             const container = document.getElementById("graph-container");
             const svgElement = container?.querySelector("svg");
 
-            if (svgElement) {
-                panZoomInstance = svgPanZoom.default(svgElement, {
-                    zoomEnabled: true,
-                    controlIconsEnabled: true,
-                    fit: true,
-                    center: true,
-                    refreshRate: "auto", // For smooth resizing
-                });
+            if (!svgElement) return;
 
-                window.addEventListener("resize", handleResize);
-            }
-        });
+            const { default: svgPanZoom } = await import("svg-pan-zoom");
+
+            panZoomRef.current = svgPanZoom(svgElement, {
+                zoomEnabled: true,
+                controlIconsEnabled: true,
+                fit: true,
+                center: true,
+            });
+
+            resizeListener = () => {
+                try {
+                    panZoomRef.current?.resize().fit().center();
+                } catch (e) {
+                    // Keeps the console clean during extreme window resizing
+                }
+            };
+
+            window.addEventListener("resize", resizeListener);
+        };
+
+        init();
 
         return () => {
-            panZoomInstance?.destroy();
-            window.removeEventListener("resize", handleResize);
+            panZoomRef.current?.destroy();
+            panZoomRef.current = null;
+            if (resizeListener) window.removeEventListener("resize", resizeListener);
         };
-    }, [rsc]);
+    }, [rsc]); // Re-run if the RSC content changes
 
     return (
         <div className="p-2">
