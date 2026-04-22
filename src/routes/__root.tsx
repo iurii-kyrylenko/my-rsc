@@ -1,18 +1,24 @@
 /// <reference types="vite/client" />
+import { QueryClient } from "@tanstack/react-query";
 import {
     HeadContent,
     Link,
     Scripts,
-    createRootRoute,
+    createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import * as React from "react";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary";
 import { NotFound } from "~/components/NotFound";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo";
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+    queryClient: QueryClient;
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
     head: () => ({
         meta: [
             {
@@ -93,6 +99,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 <hr />
                 {children}
                 <TanStackRouterDevtools position="bottom-right" />
+                <ReactQueryDevtools buttonPosition="bottom-left" />
                 <Scripts />
             </body>
         </html>

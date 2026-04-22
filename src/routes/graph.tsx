@@ -3,17 +3,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getSvg } from "~/components/getSvg";
 import { useEffect, useRef } from "react";
+import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
+
+const graphQueryOptions = (dotPath?: string) => queryOptions({
+    queryKey: ["dot", dotPath],
+    structuralSharing: false,
+    queryFn: () => getSvg({ data: dotPath }),
+    staleTime: Infinity,
+    retry: false,
+});
+
+const dotPath = "src/data/inception.dot";
 
 export const Route = createFileRoute('/graph')({
-    loader: async () => {
-        const { rsc } = await getSvg({ data: "src/data/hags-nook.dot" });
-        return { rsc };
+    loader: async ({ context }) => {
+        await context.queryClient.ensureQueryData(graphQueryOptions(dotPath));
     },
     component: RouteComponent,
 })
 
 function RouteComponent() {
-    const { rsc } = Route.useLoaderData();
+    const { data } = useQuery(graphQueryOptions(dotPath));
+    const rsc = data?.rsc;
 
     const panZoomRef = useRef<any>(null);
 
