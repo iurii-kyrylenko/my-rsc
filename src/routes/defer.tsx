@@ -1,13 +1,12 @@
 // src/routes/defer.tsx
 
 import { Await, createFileRoute } from "@tanstack/react-router";
+import { CompositeComponent } from "@tanstack/react-start/rsc";
 import { Suspense, use } from "react";
 import { getCode } from "~/components/getCode";
 
 export const Route = createFileRoute("/defer")({
-    loader: async () => {
-        return { codePromise: getCode({ data: "src/routes/defer.tsx" }) };
-    },
+    loader: () => ({ codePromise: getCode({ data: "src/routes/defer.tsx" }) }),
     component: RouteComponent,
 });
 
@@ -20,7 +19,8 @@ function RouteComponent() {
 
             <Suspense fallback={<div>Loading...</div>}>
                 <Await promise={codePromise}>
-                    {({ Renderable }) => Renderable}
+                    {/* {({ src }) => <CompositeComponent src={src} />} */}
+                    {({ src }) => src}
                 </Await>
                 {/* <Deferred promise={codePromise} /> */}
             </Suspense>
@@ -29,6 +29,7 @@ function RouteComponent() {
 }
 
 function Deferred({ promise }: { promise: ReturnType<typeof getCode> }) {
-    const { Renderable } = use(promise);
-    return Renderable;
+    const { src } = use(promise);
+    // return <CompositeComponent src = {src} />;
+    return src;
 }

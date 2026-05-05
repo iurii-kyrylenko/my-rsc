@@ -16,9 +16,7 @@ const graphQueryOptions = (dotPath?: string) => queryOptions({
 const dotPath = "src/data/inception.dot";
 
 export const Route = createFileRoute('/graph')({
-    loader: async ({ context }) => {
-        await context.queryClient.ensureQueryData(graphQueryOptions(dotPath));
-    },
+    loader: ({ context }) => context.queryClient.ensureQueryData(graphQueryOptions(dotPath)),
     component: RouteComponent,
 })
 
