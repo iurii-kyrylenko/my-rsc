@@ -92,6 +92,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                         Defer
                     </Link>
                     {" | "}
+                    <Link to="/defer3" activeProps={{ className: "font-bold" }}>
+                        Defer3
+                    </Link>
+                    {" | "}
+                    <Link to="/with-suspense" activeProps={{ className: "font-bold" }}>
+                        With Suspense
+                    </Link>
+                    {" | "}
                     <Link to="/graph" activeProps={{ className: "font-bold" }}>
                         Graph
                     </Link>

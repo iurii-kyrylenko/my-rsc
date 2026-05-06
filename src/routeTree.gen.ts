@@ -9,13 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WithSuspenseRouteImport } from './routes/with-suspense'
 import { Route as SimpleRouteImport } from './routes/simple'
 import { Route as GraphRouteImport } from './routes/graph'
+import { Route as Defer3RouteImport } from './routes/defer3'
 import { Route as DeferRouteImport } from './routes/defer'
 import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]js'
 import { Route as CompositeRouteImport } from './routes/composite'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WithSuspenseRoute = WithSuspenseRouteImport.update({
+  id: '/with-suspense',
+  path: '/with-suspense',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SimpleRoute = SimpleRouteImport.update({
   id: '/simple',
   path: '/simple',
@@ -24,6 +31,11 @@ const SimpleRoute = SimpleRouteImport.update({
 const GraphRoute = GraphRouteImport.update({
   id: '/graph',
   path: '/graph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Defer3Route = Defer3RouteImport.update({
+  id: '/defer3',
+  path: '/defer3',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DeferRoute = DeferRouteImport.update({
@@ -52,16 +64,20 @@ export interface FileRoutesByFullPath {
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
+  '/with-suspense': typeof WithSuspenseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
+  '/with-suspense': typeof WithSuspenseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +85,10 @@ export interface FileRoutesById {
   '/composite': typeof CompositeRoute
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
+  '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
   '/simple': typeof SimpleRoute
+  '/with-suspense': typeof WithSuspenseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,18 +97,30 @@ export interface FileRouteTypes {
     | '/composite'
     | '/customScript.js'
     | '/defer'
+    | '/defer3'
     | '/graph'
     | '/simple'
+    | '/with-suspense'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/composite' | '/customScript.js' | '/defer' | '/graph' | '/simple'
+  to:
+    | '/'
+    | '/composite'
+    | '/customScript.js'
+    | '/defer'
+    | '/defer3'
+    | '/graph'
+    | '/simple'
+    | '/with-suspense'
   id:
     | '__root__'
     | '/'
     | '/composite'
     | '/customScript.js'
     | '/defer'
+    | '/defer3'
     | '/graph'
     | '/simple'
+    | '/with-suspense'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,12 +128,21 @@ export interface RootRouteChildren {
   CompositeRoute: typeof CompositeRoute
   CustomScriptDotjsRoute: typeof CustomScriptDotjsRoute
   DeferRoute: typeof DeferRoute
+  Defer3Route: typeof Defer3Route
   GraphRoute: typeof GraphRoute
   SimpleRoute: typeof SimpleRoute
+  WithSuspenseRoute: typeof WithSuspenseRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/with-suspense': {
+      id: '/with-suspense'
+      path: '/with-suspense'
+      fullPath: '/with-suspense'
+      preLoaderRoute: typeof WithSuspenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/simple': {
       id: '/simple'
       path: '/simple'
@@ -116,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/graph'
       fullPath: '/graph'
       preLoaderRoute: typeof GraphRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/defer3': {
+      id: '/defer3'
+      path: '/defer3'
+      fullPath: '/defer3'
+      preLoaderRoute: typeof Defer3RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defer': {
@@ -154,8 +200,10 @@ const rootRouteChildren: RootRouteChildren = {
   CompositeRoute: CompositeRoute,
   CustomScriptDotjsRoute: CustomScriptDotjsRoute,
   DeferRoute: DeferRoute,
+  Defer3Route: Defer3Route,
   GraphRoute: GraphRoute,
   SimpleRoute: SimpleRoute,
+  WithSuspenseRoute: WithSuspenseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
