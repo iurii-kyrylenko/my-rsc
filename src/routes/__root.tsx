@@ -97,7 +97,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     </Link>
                     {" | "}
                     <Link to="/with-suspense" activeProps={{ className: "font-bold" }}>
-                        With Suspense
+                        Suspense3
                     </Link>
                     {" | "}
                     <Link to="/notfications" activeProps={{ className: "font-bold" }}>

@@ -1,3 +1,4 @@
-# My RSC
+# My RSC -- TanStack Way
 
-Based on TanStack Router and TanStack Start.
+Follows https://tanstack.com/start/latest/docs/framework/react/guide/server-components
+
