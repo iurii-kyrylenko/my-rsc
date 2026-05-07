@@ -22,12 +22,12 @@ function RouteComponent() {
                 src={src}
                 copyButton={({ textToCopy }) => (
                     <button
-                        className="text-white bg-blue-500 hover:bg-blue-400 size-16 rounded-full"
+                        className="text-white bg-blue-500 hover:bg-blue-400 p-4 rounded-full"
                         onClick={async () => {
                             await navigator.clipboard?.writeText(textToCopy);
                         }}
                     >
-                        {textToCopy.length}
+                        {`Copy ${textToCopy.length} bytes`}
                     </button>
                 )}
             />

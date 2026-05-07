@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WithSuspenseRouteImport } from './routes/with-suspense'
 import { Route as SimpleRouteImport } from './routes/simple'
+import { Route as NotficationsRouteImport } from './routes/notfications'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as Defer3RouteImport } from './routes/defer3'
 import { Route as DeferRouteImport } from './routes/defer'
@@ -26,6 +27,11 @@ const WithSuspenseRoute = WithSuspenseRouteImport.update({
 const SimpleRoute = SimpleRouteImport.update({
   id: '/simple',
   path: '/simple',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotficationsRoute = NotficationsRouteImport.update({
+  id: '/notfications',
+  path: '/notfications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GraphRoute = GraphRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
+  '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
   '/with-suspense': typeof WithSuspenseRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
+  '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
   '/with-suspense': typeof WithSuspenseRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
   '/graph': typeof GraphRoute
+  '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
   '/with-suspense': typeof WithSuspenseRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/defer'
     | '/defer3'
     | '/graph'
+    | '/notfications'
     | '/simple'
     | '/with-suspense'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/defer'
     | '/defer3'
     | '/graph'
+    | '/notfications'
     | '/simple'
     | '/with-suspense'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/defer'
     | '/defer3'
     | '/graph'
+    | '/notfications'
     | '/simple'
     | '/with-suspense'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   DeferRoute: typeof DeferRoute
   Defer3Route: typeof Defer3Route
   GraphRoute: typeof GraphRoute
+  NotficationsRoute: typeof NotficationsRoute
   SimpleRoute: typeof SimpleRoute
   WithSuspenseRoute: typeof WithSuspenseRoute
 }
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/simple'
       fullPath: '/simple'
       preLoaderRoute: typeof SimpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notfications': {
+      id: '/notfications'
+      path: '/notfications'
+      fullPath: '/notfications'
+      preLoaderRoute: typeof NotficationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/graph': {
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DeferRoute: DeferRoute,
   Defer3Route: Defer3Route,
   GraphRoute: GraphRoute,
+  NotficationsRoute: NotficationsRoute,
   SimpleRoute: SimpleRoute,
   WithSuspenseRoute: WithSuspenseRoute,
 }

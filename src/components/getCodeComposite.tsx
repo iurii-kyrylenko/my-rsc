@@ -14,7 +14,7 @@ export const getCode = createServerFn()
             (props: { copyButton: (data: { textToCopy: string }) => React.ReactNode }) => (
                 <div className="relative group">
 
-                    <div className="absolute right-2 top-2">
+                    <div className="absolute right-4 top-4">
                         {props.copyButton({ textToCopy: content })}
                     </div>
 
