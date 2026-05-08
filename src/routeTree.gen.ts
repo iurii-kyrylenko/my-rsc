@@ -13,6 +13,7 @@ import { Route as WithSuspenseRouteImport } from './routes/with-suspense'
 import { Route as SimpleRouteImport } from './routes/simple'
 import { Route as NotficationsRouteImport } from './routes/notfications'
 import { Route as GraphRouteImport } from './routes/graph'
+import { Route as FlightRouteImport } from './routes/flight'
 import { Route as Defer3RouteImport } from './routes/defer3'
 import { Route as DeferRouteImport } from './routes/defer'
 import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]js'
@@ -37,6 +38,11 @@ const NotficationsRoute = NotficationsRouteImport.update({
 const GraphRoute = GraphRouteImport.update({
   id: '/graph',
   path: '/graph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlightRoute = FlightRouteImport.update({
+  id: '/flight',
+  path: '/flight',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Defer3Route = Defer3RouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
+  '/flight': typeof FlightRoute
   '/graph': typeof GraphRoute
   '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
+  '/flight': typeof FlightRoute
   '/graph': typeof GraphRoute
   '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
+  '/flight': typeof FlightRoute
   '/graph': typeof GraphRoute
   '/notfications': typeof NotficationsRoute
   '/simple': typeof SimpleRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/customScript.js'
     | '/defer'
     | '/defer3'
+    | '/flight'
     | '/graph'
     | '/notfications'
     | '/simple'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/customScript.js'
     | '/defer'
     | '/defer3'
+    | '/flight'
     | '/graph'
     | '/notfications'
     | '/simple'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/customScript.js'
     | '/defer'
     | '/defer3'
+    | '/flight'
     | '/graph'
     | '/notfications'
     | '/simple'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   CustomScriptDotjsRoute: typeof CustomScriptDotjsRoute
   DeferRoute: typeof DeferRoute
   Defer3Route: typeof Defer3Route
+  FlightRoute: typeof FlightRoute
   GraphRoute: typeof GraphRoute
   NotficationsRoute: typeof NotficationsRoute
   SimpleRoute: typeof SimpleRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/graph'
       fullPath: '/graph'
       preLoaderRoute: typeof GraphRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flight': {
+      id: '/flight'
+      path: '/flight'
+      fullPath: '/flight'
+      preLoaderRoute: typeof FlightRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/defer3': {
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   CustomScriptDotjsRoute: CustomScriptDotjsRoute,
   DeferRoute: DeferRoute,
   Defer3Route: Defer3Route,
+  FlightRoute: FlightRoute,
   GraphRoute: GraphRoute,
   NotficationsRoute: NotficationsRoute,
   SimpleRoute: SimpleRoute,

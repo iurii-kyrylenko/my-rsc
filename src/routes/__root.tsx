@@ -107,6 +107,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     <Link to="/graph" activeProps={{ className: "font-bold" }}>
                         Graph
                     </Link>
+                    {" | "}
+                    <Link to="/flight" activeProps={{ className: "font-bold" }}>
+                        Flight
+                    </Link>
                 </div>
                 <hr />
                 {children}
