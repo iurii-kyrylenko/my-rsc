@@ -17,6 +17,7 @@ import { Route as FlightRouteImport } from './routes/flight'
 import { Route as Defer3RouteImport } from './routes/defer3'
 import { Route as DeferRouteImport } from './routes/defer'
 import { Route as CustomScriptDotjsRouteImport } from './routes/customScript[.]js'
+import { Route as Composite2RouteImport } from './routes/composite2'
 import { Route as CompositeRouteImport } from './routes/composite'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -60,6 +61,11 @@ const CustomScriptDotjsRoute = CustomScriptDotjsRouteImport.update({
   path: '/customScript.js',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Composite2Route = Composite2RouteImport.update({
+  id: '/composite2',
+  path: '/composite2',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompositeRoute = CompositeRouteImport.update({
   id: '/composite',
   path: '/composite',
@@ -74,6 +80,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/composite': typeof CompositeRoute
+  '/composite2': typeof Composite2Route
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/composite': typeof CompositeRoute
+  '/composite2': typeof Composite2Route
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/composite': typeof CompositeRoute
+  '/composite2': typeof Composite2Route
   '/customScript.js': typeof CustomScriptDotjsRoute
   '/defer': typeof DeferRoute
   '/defer3': typeof Defer3Route
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/composite'
+    | '/composite2'
     | '/customScript.js'
     | '/defer'
     | '/defer3'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/composite'
+    | '/composite2'
     | '/customScript.js'
     | '/defer'
     | '/defer3'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/composite'
+    | '/composite2'
     | '/customScript.js'
     | '/defer'
     | '/defer3'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CompositeRoute: typeof CompositeRoute
+  Composite2Route: typeof Composite2Route
   CustomScriptDotjsRoute: typeof CustomScriptDotjsRoute
   DeferRoute: typeof DeferRoute
   Defer3Route: typeof Defer3Route
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CustomScriptDotjsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/composite2': {
+      id: '/composite2'
+      path: '/composite2'
+      fullPath: '/composite2'
+      preLoaderRoute: typeof Composite2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/composite': {
       id: '/composite'
       path: '/composite'
@@ -238,6 +258,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CompositeRoute: CompositeRoute,
+  Composite2Route: Composite2Route,
   CustomScriptDotjsRoute: CustomScriptDotjsRoute,
   DeferRoute: DeferRoute,
   Defer3Route: Defer3Route,
