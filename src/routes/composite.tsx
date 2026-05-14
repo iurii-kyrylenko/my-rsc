@@ -5,15 +5,12 @@ import { CompositeComponent } from "@tanstack/react-start/rsc";
 import { getCode } from "~/components/getCodeComposite";
 
 export const Route = createFileRoute("/composite")({
-    loader: async () => {
-        const { src } = await getCode({ data: "src/components/getCodeComposite.tsx" });
-        return { src };
-    },
+    loader: () => getCode({ data: "src/components/getCodeComposite.tsx" }),
     component: RouteComponent,
 });
 
 function RouteComponent() {
-    const { src } = Route.useLoaderData();
+    const src = Route.useLoaderData();
 
     return (
         <div className="p-2">

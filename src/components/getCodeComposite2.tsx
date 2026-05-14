@@ -23,6 +23,5 @@ export const getCode = createServerFn()
     .inputValidator(z.string().default("package.json"))
     .handler(async ({ data }) => {
         const content = (await readFile(data)).toString();
-        const src = await renderServerComponent(<Code text={content} />);
-        return { src };
+        return renderServerComponent(<Code text={content} />);
     });
